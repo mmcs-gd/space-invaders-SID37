@@ -1,5 +1,4 @@
 #include <SDL2/SDL.h>
-#include <gl/glew.h>
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 
@@ -113,7 +112,6 @@ int main(int argc, char **argv)
 	{
 		return 1;
 	}
-	glewInit();
 
 	Init();
 
