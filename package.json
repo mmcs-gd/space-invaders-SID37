@@ -13,8 +13,8 @@
         }
     },
     "scripts": {
-        "em-build-debug": "em++ src/main.cpp -g -o dist/index.js -s USE_SDL=2 -s MIN_WEBGL_VERSION=2 -s MAX_WEBGL_VERSION=2",
-        "em-build": "em++ src/main.cpp -o dist/index.js -O3 -s USE_SDL=2 -s MIN_WEBGL_VERSION=2 -s MAX_WEBGL_VERSION=2",
+        "em-build-debug": "node build.js src debug dist\\index.js",
+        "em-build": "node build.js src release dist\\index.js",
         "copy-static": "copyfiles index.html dist",
         "build": "npm run copy-static && npm run em-build",
         "build-debug": "npm run copy-static && npm run em-build-debug",
