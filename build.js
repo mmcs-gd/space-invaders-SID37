@@ -10,8 +10,8 @@ const output_js = process.argv[4]
 
 
 const flag_list = {
-    "release": "-O3 -s USE_SDL=2 -s MIN_WEBGL_VERSION=2 -s MAX_WEBGL_VERSION=2",
-    "debug": "-g -o dist/index.js -s USE_SDL=2 -s MIN_WEBGL_VERSION=2 -s MAX_WEBGL_VERSION=2"
+    "release": "-O3 -s USE_SDL=2 -s MIN_WEBGL_VERSION=2 -s MAX_WEBGL_VERSION=3 -fexceptions",
+    "debug": "-g -o dist/index.js -s USE_SDL=2 -s MIN_WEBGL_VERSION=2 -s MAX_WEBGL_VERSION=3 -fexceptions -D DEBUG=1"
 };
 
 if (process.argv.includes("-h") || process.argv.length < 5) {
@@ -37,6 +37,7 @@ glob(path.join(dirname, '/**/*.cpp'), function(err, files) {
             "em++",
             files.join(" "),
             `-o ${output_js}`,
+            `-I ${dirname}`,
             flag_list[mode]
         ].join(" "),
         (err, stdout, stderr) => {
