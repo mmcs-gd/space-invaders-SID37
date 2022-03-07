@@ -15,7 +15,7 @@
     "scripts": {
         "em-build-debug": "node build.js src debug dist/index.js",
         "em-build": "node build.js src release dist/index.js",
-        "copy-static": "copyfiles index.html dist",
+        "copy-static": "copyfiles -u 1 public/* dist",
         "build": "npm run copy-static && npm run em-build",
         "build-debug": "npm run copy-static && npm run em-build-debug",
         "watch": "npm run copy-static && npm-watch"
