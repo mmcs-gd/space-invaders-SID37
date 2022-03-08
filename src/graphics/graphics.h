@@ -8,6 +8,11 @@ struct GridColor {
     GLubyte r;
     GLubyte g;
     GLubyte b;
+
+    GridColor& operator+=(const GridColor& c) {
+        r += c.r; g += c.g; b += c.b;
+        return *this;
+    }
 };
 
 

@@ -11,6 +11,14 @@ class Vector3 {
     size_t z_size;
 
 public:
+    Vector3():
+            vect(0),
+            x_size(0),
+            y_size(0),
+            z_size(0) {
+    }
+
+
     Vector3(size_t x, size_t y, size_t z, const T* data = nullptr):
             vect(x * y * z),
             x_size(x),

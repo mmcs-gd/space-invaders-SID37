@@ -6,12 +6,14 @@
 
 #include <vector>
 
+
 class Grid {
     Graphics& graphics;
 
     Vector3<GridPoint> data;
     std::vector<GridMaterial> materials;
     bool update_materials;
+    bool update_grid;
 
 public:
     Grid(Graphics& graphics);

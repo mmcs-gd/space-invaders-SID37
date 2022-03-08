@@ -11,8 +11,7 @@ namespace Shaders {
 
     const char* background_fragment_shader = R"(#version 300 es
 
-        precision lowp float;
-        precision lowp usampler3D;
+        precision mediump float;
 
         out vec4 color;
 
@@ -27,8 +26,8 @@ namespace Shaders {
 
     const char* scene_fragment_shader = R"(#version 300 es
 
-        precision lowp float;
-        precision lowp usampler3D;
+        precision mediump float;
+        precision mediump usampler3D;
 
         uniform vec2 screen_size;
         uniform vec3 grid_size;
