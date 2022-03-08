@@ -76,21 +76,21 @@ namespace Shaders {
                 if (delta_length.y < 1.0 && delta_length.y < delta_length.x) {
                     voxel_location.z += direction.y;
                     uint y_voxel = get_voxel(voxel_location).w;
-                    result_color += materials[y_voxel].color.xyz * ray_color * vec3(0.8, 0.8, 1);
+                    result_color += materials[y_voxel].color.xyz * ray_color * vec3(0.8);
                     ray_color *= 1.0 - materials[y_voxel].color.w;
                     delta_length.y += step.y;
                 }
                 if (delta_length.x < 1.0) {
                     voxel_location.y += direction.x;
                     uint x_voxel = get_voxel(voxel_location).w;
-                    result_color += materials[x_voxel].color.xyz * ray_color * vec3(0.8, 1, 0.8);
+                    result_color += materials[x_voxel].color.xyz * ray_color * vec3(0.8);
                     ray_color *= 1.0 - materials[x_voxel].color.w;
                     delta_length.x += step.x;
                 }
                 if (delta_length.y < 1.0) {
                     voxel_location.z += direction.y;
                     uint y_voxel = get_voxel(voxel_location).w;
-                    result_color += materials[y_voxel].color.xyz * ray_color * vec3(0.8, 0.8, 1);
+                    result_color += materials[y_voxel].color.xyz * ray_color * vec3(0.8);
                     ray_color *= 1.0 - materials[y_voxel].color.w;
                     delta_length.y += step.y;
                 }

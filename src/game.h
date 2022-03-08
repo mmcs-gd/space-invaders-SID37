@@ -12,6 +12,8 @@
 class Game {
     FpsCounter fps_counter;
 
+    void ProcessingEvents();
+
 public:
     Screen screen;
     Graphics graphics;

@@ -16,7 +16,7 @@ class Screen {
 public:
     Screen(const char* title);
 
-    void ProcessingEvents();
+    bool PollInputEvent(SDL_Event* event);
     void Draw();
 
     int Width();

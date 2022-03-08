@@ -16,6 +16,11 @@ bool FrameAnimation::UpdateRequired() const {
 }
 
 
+const Vector3<GLubyte>& FrameAnimation::GetFrame() const {
+    return frame_data[current_frame];
+}
+
+
 void FrameAnimation::Tick(float dt) {
     current_time += dt;
     while (current_time > period) {

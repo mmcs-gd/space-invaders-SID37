@@ -7,17 +7,16 @@
 
 
 class InvaderEntity {
-    const FrameAnimation& animation;
-
 public:
+    const FrameAnimation* animation;
     Point location;
 
-    InvaderEntity(Point location, const FrameAnimation& animation):
+    InvaderEntity(Point location, const FrameAnimation* animation):
             location(location),
             animation(animation) {
     }
 
     void Draw(Grid& grid) {
-        animation.Draw(grid, location);
+        animation->Draw(grid, location);
     }
 };

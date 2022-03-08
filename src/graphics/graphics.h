@@ -73,6 +73,8 @@ public:
     void UpdateGrid(const GridPoint* grid);
     void UpdateMaterials(const GridMaterial* matrials);
 
+    void ScreenToGridLocation(int screen_x, int screen_y, int* grid_x, int* grid_y);
+
     int XSize() const;
     int YSize() const;
     int ZSize() const;

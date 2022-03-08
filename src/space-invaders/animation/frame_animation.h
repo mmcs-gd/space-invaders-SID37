@@ -25,6 +25,13 @@ public:
         return animation;
     }
 
+    void Replace(GLubyte old_value, GLubyte new_value) {
+        for (int i = 0; i < frame_data.size(); ++i) {
+            frame_data[i].Replace(old_value, new_value);
+        }
+    }
+
+    const Vector3<GLubyte>& GetFrame() const;
     bool UpdateRequired() const;
     void Tick(float dt);
     void Draw(Grid& grid, Point position) const;

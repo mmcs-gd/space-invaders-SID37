@@ -79,6 +79,14 @@ Graphics::Graphics(Screen& screen, int x_size, int y_size, int z_size):
 }
 
 
+void Graphics::ScreenToGridLocation(int screen_x, int screen_y, int* grid_y, int* grid_z) {
+    int min_direction = std::min(screen.Width(), screen.Height());
+    int delta_x = (screen.Width() - min_direction) / 2;
+    int delta_y = (screen.Height() - min_direction) / 2;
+    *grid_y = (screen_x - delta_x) * grid_y_size / min_direction;
+    *grid_z = (screen_y - delta_y) * grid_z_size / min_direction;
+}
+
 int Graphics::XSize() const {
     return grid_x_size;
 }

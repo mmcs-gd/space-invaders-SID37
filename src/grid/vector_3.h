@@ -41,6 +41,11 @@ public:
     constexpr size_t YSize() const { return y_size; }
     constexpr size_t ZSize() const { return z_size; }
 
+    void Replace(const T& old_value, const T& new_value) {
+        for (int i = 0; i < Size(); ++i)
+            if (vect[i] == old_value)
+                vect[i] = new_value;
+    }
 
     const T& Get(size_t x, size_t y, size_t z) const {
         return vect[x + x_size * (y + y_size * z)];
