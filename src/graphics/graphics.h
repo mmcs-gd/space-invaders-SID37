@@ -31,7 +31,15 @@ struct GridPoint {
 
 
 struct GridMaterial {
+    struct Color { GLfloat r, g, b; };
+
     GlslVec4 color;
+    GlslVec4 options;
+
+    GridMaterial(Color color = { 0, 0, 0 }, GLfloat reflection = 0, GLfloat density = 0):
+        color { color.r, color.g, color.b, 1 },
+        options { reflection, density, 0, 0 } {
+    }
 };
 
 

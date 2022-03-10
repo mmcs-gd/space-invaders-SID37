@@ -1,6 +1,7 @@
 #include "game.h"
 #include "space-invaders/scenes/game_scene.h"
 #include "space-invaders/scenes/editor_scene.h"
+#include "space-invaders/scenes/test_scene.h"
 
 #include "tools/logger.h"
 
@@ -26,6 +27,7 @@ void Update() {
 int main() {
     game.UpdateScene(std::make_shared<GameScene>(game));
     // game.UpdateScene(std::make_shared<EditorScene>(game));
+    // game.UpdateScene(std::make_shared<TestScene>(game));
 
     try {
         emscripten_set_main_loop(Update, 0, 1);

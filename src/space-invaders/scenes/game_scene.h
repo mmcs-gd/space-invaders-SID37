@@ -11,9 +11,12 @@ class GameScene : public Scene {
     Game& game;
     std::vector<FrameAnimation> animations;
     std::vector<InvaderEntity> invaders;
+    std::vector<InvaderEntity> decorations;
 
     std::shared_ptr<InvaderEntity> player;
     std::shared_ptr<InvaderEntity> player_bullet;
+
+    Vector3<GridColor> bullet_light;
 
     int current_invader = 0;
     int direction = 5;
@@ -25,6 +28,7 @@ class GameScene : public Scene {
     float bullet_location = 0;
 
     int invaders_count = 0;
+
 
 public:
     GameScene(Game& game);

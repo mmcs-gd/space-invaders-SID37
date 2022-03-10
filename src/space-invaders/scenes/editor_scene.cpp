@@ -12,10 +12,10 @@ EditorScene::EditorScene(Game& game):
         location_x(0),
         location_y(0) {
 
-    game.grid.SetMaterial(0, {{0, 0, 0, 0}});
-    game.grid.SetMaterial(1, {{0.5, 0.5, 0, 1}});
-    game.grid.SetMaterial(2, {{0.2, 0.2, 0.2, 0.5}});
-    game.grid.SetMaterial(3, {{0.5, 0, 0, 0.5}});
+    game.grid.SetMaterial(0, {{0, 0, 0}, 0});
+    game.grid.SetMaterial(1, {{0.5, 0.5, 0}, 0.5, 0.5});
+    game.grid.SetMaterial(2, {{0.2, 0.2, 0.2}, 0.5});
+    game.grid.SetMaterial(3, {{0.5, 0, 0}, 0.5});
 }
 
 

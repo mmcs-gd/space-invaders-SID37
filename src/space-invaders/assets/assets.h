@@ -11,4 +11,6 @@ namespace Assets {
 
     extern GLubyte player_1[1][5 * 13 * 7];
     extern GLubyte player_bullet_1[1][1 * 1 * 4];
+
+    extern GLubyte cloud_1[1][6 * 16 * 11];
 }
