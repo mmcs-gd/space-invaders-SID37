@@ -19,7 +19,7 @@ GameScene::GameScene(Game& game):
     game.grid.SetMaterial(4, {{0, 0.7, 0}, 1});
     game.grid.SetMaterial(5, {{0.8, 0.8, 1.0}, 1});
     game.grid.SetMaterial(6, {{0.7, 0.4, 0}, 1});
-    game.grid.SetMaterial(7, {{1, 1, 1}, 0, 0.3});
+    game.grid.SetMaterial(7, {{1, 1, 1}, 0, 0.5});
 
     GLubyte empty_animation[1][1] = {0};
     animations.push_back(FrameAnimation::Create(Assets::invader_1, 6, 8, 8, 0.5f));
