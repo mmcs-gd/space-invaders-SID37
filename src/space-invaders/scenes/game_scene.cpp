@@ -10,7 +10,7 @@ namespace {
 
 GameScene::GameScene(Game& game):
         game(game),
-        bullet_light(7, 15, 18) {
+        bullet_light(7, 21, 24) {
 
     game.grid.SetMaterial(0, {{0, 0, 0}, 0});
     game.grid.SetMaterial(1, {{0.5, 0.5, 0}, 1});
@@ -19,7 +19,7 @@ GameScene::GameScene(Game& game):
     game.grid.SetMaterial(4, {{0, 0.7, 0}, 1});
     game.grid.SetMaterial(5, {{0.8, 0.8, 1.0}, 1});
     game.grid.SetMaterial(6, {{0.7, 0.4, 0}, 1});
-    game.grid.SetMaterial(7, {{1, 1, 1}, 0, 0.5});
+    game.grid.SetMaterial(7, {{1, 1, 1}, 0.1, 0.5});
 
     GLubyte empty_animation[1][1] = {0};
     animations.push_back(FrameAnimation::Create(Assets::invader_1, 6, 8, 8, 0.5f));
@@ -36,7 +36,7 @@ GameScene::GameScene(Game& game):
     animations[5].Replace(1, 6);
     animations[6].Replace(1, 7);
 
-    player = std::make_shared<InvaderEntity>(Point{1, size_t(player_location), 200}, &animations[2]);
+    player = std::make_shared<InvaderEntity>(Point{1, int(player_location), 200}, &animations[2]);
     player_bullet = std::make_shared<InvaderEntity>(Point{4, 10, 200 - 10}, &animations[3]);
 
     for (int z = 0; z < bullet_light.ZSize(); ++z)
@@ -44,30 +44,30 @@ GameScene::GameScene(Game& game):
             for (int x = 0; x < bullet_light.XSize(); ++x) {
                 float result = 0;
                 for (int i = 0; i < 4; ++i)
-                    result += 250 / (sqr(x - 4) + sqr(y - 7) + sqr(z - (7 + i)) + 0.001);
-                GLubyte value = (GLubyte)result;
-                GLubyte value_8_8 = (GLubyte)(result * 0.8);
+                    result += 250 / (sqr(x - 4) + sqr(y - 10) + sqr(z - (10 + i)) + 0.001);
+                GLubyte value = (GLubyte)std::min(result, 255.0f);
+                GLubyte value_8_8 = (GLubyte)std::min(result * 0.8f, 255.0f);
                 bullet_light.Get(x, y, z) = {value_8_8, value_8_8, value};
             }
 
-    for (size_t i = 0; i < 40; ++i) {
-        decorations.push_back(InvaderEntity({size_t(rand() % 3), size_t(rand() % 240), size_t(130 + rand() % 50)}, &animations[6]));
+    for (int i = 0; i < 40; ++i) {
+        decorations.push_back(InvaderEntity({rand() % 3, rand() % 240, 130 + rand() % 50}, &animations[6]));
     }
 
-    for (size_t j = 0; j < 2; ++j) {
-        for (size_t i = 0; i < 11; ++i) {
+    for (int j = 0; j < 2; ++j) {
+        for (int i = 0; i < 11; ++i) {
             invaders.push_back(InvaderEntity({2, i * 16, j * 16 + 30}, &animations[0]));
             invaders_count += 1;
         }
     }
-    for (size_t j = 0; j < 2; ++j) {
-        for (size_t i = 0; i < 11; ++i) {
+    for (int j = 0; j < 2; ++j) {
+        for (int i = 0; i < 11; ++i) {
             invaders.push_back(InvaderEntity({2, i * 16, (j + 2) * 16 + 30}, &animations[1]));
             invaders_count += 1;
         }
     }
-    for (size_t j = 0; j < 1; ++j) {
-        for (size_t i = 0; i < 11; ++i) {
+    for (int j = 0; j < 1; ++j) {
+        for (int i = 0; i < 11; ++i) {
             invaders.push_back(InvaderEntity({2, i * 16, (j + 4) * 16 + 30}, &animations[5]));
             invaders_count += 1;
         }
@@ -84,7 +84,7 @@ void GameScene::EventKeyDown(SDL_KeyCode key) {
         player_bullet->location = {
             player_bullet->location.x,
             player->location.y + 6,
-            size_t(bullet_location)};
+            int(bullet_location)};
     };
 }
 
@@ -187,7 +187,9 @@ void GameScene::Tick(float dt) {
     player->Draw(game.grid);
     if (bullet_location > 0) {
         player_bullet->Draw(game.grid);
-        if (player_bullet->location.z > 7)
-            game.grid.StoreLight(bullet_light, player_bullet->location - Point{4, 7, 7});
+        if (player_bullet->location.z > 10) {
+            // game.grid.StoreLight(bullet_light, player_bullet->location - Point{4, 10, 10});
+            game.grid.AddLightSource({100, 100, 0}, player_bullet->location, player_bullet->location + Point{1, 1, 4});
+        }
     }
 }

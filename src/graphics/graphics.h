@@ -3,6 +3,8 @@
 #include "graphics/screen.h"
 #include "shader_program.h"
 
+#include <algorithm>
+
 
 struct GridColor {
     GLubyte r;
@@ -12,6 +14,14 @@ struct GridColor {
     GridColor& operator+=(const GridColor& c) {
         r += c.r; g += c.g; b += c.b;
         return *this;
+    }
+
+    GridColor operator*(float v) {
+        return {
+            GLubyte(std::min(r * v, 255.0f)),
+            GLubyte(std::min(g * v, 255.0f)),
+            GLubyte(std::min(b * v, 255.0f))
+        };
     }
 };
 
@@ -39,6 +49,14 @@ struct GridMaterial {
     GridMaterial(Color color = { 0, 0, 0 }, GLfloat reflection = 0, GLfloat density = 0):
         color { color.r, color.g, color.b, 1 },
         options { reflection, density, 0, 0 } {
+    }
+
+    GLfloat Reflection() const {
+        return options.x;
+    }
+
+    GLfloat Density() const {
+        return options.y;
     }
 };
 

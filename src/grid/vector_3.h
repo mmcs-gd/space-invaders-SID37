@@ -1,14 +1,16 @@
 #pragma once
 
+#include "geometry.h"
+
 #include <vector>
 
 
 template<typename T>
 class Vector3 {
     std::vector<T> vect;
-    size_t x_size;
-    size_t y_size;
-    size_t z_size;
+    int x_size;
+    int y_size;
+    int z_size;
 
 public:
     Vector3():
@@ -19,11 +21,11 @@ public:
     }
 
 
-    Vector3(size_t x, size_t y, size_t z, const T* data = nullptr):
-            vect(x * y * z),
-            x_size(x),
-            y_size(y),
-            z_size(z) {
+    Vector3(Point size, const T* data = nullptr):
+            vect(size.x * size.y * size.z),
+            x_size(size.x),
+            y_size(size.y),
+            z_size(size.z) {
 
         if (data == nullptr) {
             return;
@@ -34,12 +36,23 @@ public:
         }
     }
 
+
+    Vector3(int x, int y, int z, const T* data = nullptr):
+            Vector3({x, y, z}, data) {
+    }
+
+    void Fill(const T& value) {
+        for (int i = 0; i < Size(); ++i) {
+            vect[i] = value;
+        }
+    }
+
     T* Data() { return vect.data(); }
 
-    constexpr size_t Size() const { return x_size * y_size * z_size; }
-    constexpr size_t XSize() const { return x_size; }
-    constexpr size_t YSize() const { return y_size; }
-    constexpr size_t ZSize() const { return z_size; }
+    constexpr int Size() const { return x_size * y_size * z_size; }
+    constexpr int XSize() const { return x_size; }
+    constexpr int YSize() const { return y_size; }
+    constexpr int ZSize() const { return z_size; }
 
     void Replace(const T& old_value, const T& new_value) {
         for (int i = 0; i < Size(); ++i)
@@ -47,11 +60,35 @@ public:
                 vect[i] = new_value;
     }
 
-    const T& Get(size_t x, size_t y, size_t z) const {
-        return vect[x + x_size * (y + y_size * z)];
+
+    void Resize(int x, int y, int z) {
+        x_size = x;
+        y_size = y;
+        z_size = z;
+        vect.resize(Size());
     }
 
-    T& Get(size_t x, size_t y, size_t z) {
-        return vect[x + x_size * (y + y_size * z)];
+    void Resize(Point p) {
+        x_size = p.x;
+        y_size = p.y;
+        z_size = p.z;
+        vect.resize(Size());
+    }
+
+
+    const T& Get(Point p) const {
+        return vect[p.x + x_size * (p.y + y_size * p.z)];
+    }
+
+    T& Get(Point p) {
+        return vect[p.x + x_size * (p.y + y_size * p.z)];
+    }
+
+    const T& Get(int x, int y, int z) const {
+        return Get({x, y, z});
+    }
+
+    T& Get(int x, int y, int z) {
+        return Get({x, y, z});
     }
 };

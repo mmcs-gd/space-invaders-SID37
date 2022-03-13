@@ -84,7 +84,7 @@ namespace Shaders {
             vec3 last_light = vec3(ctx.voxel_data.xyz) / 256.0;
             ctx.voxel_data = get_voxel();
             ctx.material = materials[ctx.voxel_data.w];
-            ctx.result_color += ctx.ray_color * ctx.material.color.xyz * ctx.material.options.x * (default_light * 0.8 + last_light) * 3.0;
+            ctx.result_color += ctx.ray_color * ctx.material.color.xyz * ctx.material.options.x * (default_light * 0.7 + last_light) * 3.0;
             ctx.ray_color *= 1.0 - ctx.material.options.x;
             ctx.delta_length.x += ctx.step.x;
         }
@@ -96,7 +96,7 @@ namespace Shaders {
             vec3 last_light = vec3(ctx.voxel_data.xyz) / 256.0;
             ctx.voxel_data = get_voxel();
             ctx.material = materials[ctx.voxel_data.w];
-            ctx.result_color += ctx.material.color.xyz * ctx.material.options.x * ctx.ray_color * (default_light * 0.8 + last_light) * 3.0;
+            ctx.result_color += ctx.material.color.xyz * ctx.material.options.x * ctx.ray_color * (default_light * 0.7 + last_light) * 3.0;
             ctx.ray_color *= 1.0 - ctx.material.options.x;
             ctx.delta_length.y += ctx.step.y;
         }

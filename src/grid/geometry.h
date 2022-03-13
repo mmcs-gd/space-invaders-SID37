@@ -4,11 +4,15 @@
 
 
 struct Point {
-    size_t x;
-    size_t y;
-    size_t z;
+    int x;
+    int y;
+    int z;
 
-    Point operator-(const Point& p) {
+    Point operator-(const Point& p) const {
         return {x - p.x, y - p.y, z - p.z};
+    }
+
+    Point operator+(const Point& p) const {
+        return {x + p.x, y + p.y, z + p.z};
     }
 };
