@@ -1,15 +1,15 @@
-#include "game.h"
+#include "volumatrix/game.h"
 #include "space-invaders/scenes/game_scene.h"
-#include "space-invaders/scenes/editor_scene.h"
 #include "space-invaders/scenes/test_scene.h"
+#include "voxel-editor/scenes/main_scene.h"
 
-#include "tools/logger.h"
+#include "volumatrix/tools/logger.h"
 
 #include <emscripten.h>
 #include <iostream>
 
 
-Game game("Space Invaders", 8, 256, 256);
+Volumatrix::Game game("Space Invaders", 8, 256, 256);
 auto last_time =  std::chrono::system_clock::now();
 
 int tick_counter = 0;
@@ -25,9 +25,9 @@ void Update() {
 
 
 int main() {
-    game.UpdateScene(std::make_shared<GameScene>(game));
-    // game.UpdateScene(std::make_shared<EditorScene>(game));
-    // game.UpdateScene(std::make_shared<TestScene>(game));
+    game.UpdateScene(std::make_shared<SpaceInvaders::GameScene>(game));
+    // game.UpdateScene(std::make_shared<VoxelEditor::MainScene>(game));
+    // game.UpdateScene(std::make_shared<SpaceInvaders::TestScene>(game));
 
     try {
         emscripten_set_main_loop(Update, 0, 1);

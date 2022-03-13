@@ -1,6 +1,6 @@
 #include "space-invaders/animation/frame_animation.h"
 
-#include "tools/logger.h"
+#include "volumatrix/tools/logger.h"
 
 FrameAnimation::FrameAnimation(size_t FrameCount, float period):
         frame_data(FrameCount),
@@ -16,7 +16,7 @@ bool FrameAnimation::UpdateRequired() const {
 }
 
 
-const Vector3<GLubyte>& FrameAnimation::GetFrame() const {
+const Volumatrix::Vector3<GLubyte>& FrameAnimation::GetFrame() const {
     return frame_data[current_frame];
 }
 
@@ -30,7 +30,7 @@ void FrameAnimation::Tick(float dt) {
     }
 }
 
-void FrameAnimation::Draw(Grid& grid, Point position) const {
+void FrameAnimation::Draw(Volumatrix::Grid& grid, Volumatrix::Point position) const {
     grid.StorePoints(frame_data[current_frame], position);
     update_animation = false;
 }

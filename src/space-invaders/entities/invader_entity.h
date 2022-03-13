@@ -2,21 +2,25 @@
 
 #include "space-invaders/animation/frame_animation.h"
 
-#include "grid/grid.h"
-#include "grid/geometry.h"
+#include "volumatrix/grid/grid.h"
+#include "volumatrix/grid/geometry.h"
 
 
-class InvaderEntity {
-public:
-    const FrameAnimation* animation;
-    Point location;
 
-    InvaderEntity(Point location, const FrameAnimation* animation):
-            location(location),
-            animation(animation) {
-    }
+namespace SpaceInvaders {
 
-    void Draw(Grid& grid) {
-        animation->Draw(grid, location);
-    }
-};
+    class InvaderEntity {
+    public:
+        const FrameAnimation* animation;
+        Volumatrix::Point location;
+
+        InvaderEntity(Volumatrix::Point location, const FrameAnimation* animation):
+                location(location),
+                animation(animation) {
+        }
+
+        void Draw(Volumatrix::Grid& grid) {
+            animation->Draw(grid, location);
+        }
+    };
+}
