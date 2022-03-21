@@ -19,6 +19,22 @@ namespace Volumatrix {
         Point operator+(const Point& p) const {
             return {x + p.x, y + p.y, z + p.z};
         }
+
+        Point operator*(int v) const {
+            return {x * v, y * v, z * v};
+        }
+
+        Point operator/(int v) const {
+            return {x / v, y / v, z / v};
+        }
+
+        bool operator==(const Point& p) const {
+            return z == p.z && y == p.y && x == p.x;
+        }
+
+        bool operator!=(const Point& p) const {
+            return z != p.z || y != p.y || x != p.x;
+        }
     };
 
 
@@ -57,7 +73,9 @@ namespace Volumatrix {
         GLubyte b;
 
         GridColor& operator+=(const GridColor& c) {
-            r += c.r; g += c.g; b += c.b;
+            r = GLubyte(std::min(int(r) + c.r, 255));
+            g = GLubyte(std::min(int(g) + c.g, 255));
+            b = GLubyte(std::min(int(b) + c.b, 255));
             return *this;
         }
 

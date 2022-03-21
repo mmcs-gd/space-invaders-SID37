@@ -1,9 +1,9 @@
-#include "volumatrix/game.h"
 #include "space-invaders/scenes/game_scene.h"
 #include "space-invaders/scenes/test_scene.h"
+#include "space-invaders/scenes/test_scene2.h"
 #include "voxel-editor/scenes/main_scene.h"
 
-#include "volumatrix/tools/logger.h"
+#include "volumatrix/volumatrix.h"
 
 #include <emscripten.h>
 #include <iostream>
@@ -27,7 +27,7 @@ void Update() {
 int main() {
     game.UpdateScene(std::make_shared<SpaceInvaders::GameScene>(game));
     // game.UpdateScene(std::make_shared<VoxelEditor::MainScene>(game));
-    // game.UpdateScene(std::make_shared<SpaceInvaders::TestScene>(game));
+    // game.UpdateScene(std::make_shared<SpaceInvaders::TestScene2>(game));
 
     try {
         emscripten_set_main_loop(Update, 0, 1);

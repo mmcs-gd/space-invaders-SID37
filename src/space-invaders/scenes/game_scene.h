@@ -1,7 +1,6 @@
 #pragma once
 
-#include "space-invaders/animation/frame_animation.h"
-#include "space-invaders/entities/invader_entity.h"
+#include "space-invaders/scripts/world.h"
 #include "volumatrix/scene.h"
 #include "volumatrix/game.h"
 
@@ -12,25 +11,14 @@ namespace SpaceInvaders {
 
     class GameScene : public Volumatrix::Scene {
         Volumatrix::Game& game;
-        std::vector<FrameAnimation> animations;
-        std::vector<InvaderEntity> invaders;
-        std::vector<InvaderEntity> decorations;
+        World world;
 
-        std::shared_ptr<InvaderEntity> player;
-        std::shared_ptr<InvaderEntity> player_bullet;
-
-        Volumatrix::Vector3<Volumatrix::GridColor> bullet_light;
-
-        int current_invader = 0;
-        int direction = 5;
-        int invaders_location = 0;
-        float last_time = 0;
-
-        float move_direction = 0;
-        float player_location = 0;
-        float bullet_location = 0;
-
-        int invaders_count = 0;
+        struct PressedKeys {
+            int weapon = 0;
+            bool left = false;
+            bool right = false;
+            bool shoot = false;
+        } keys;
 
 
     public:
@@ -40,6 +28,7 @@ namespace SpaceInvaders {
         virtual void EventKeyUp(SDL_KeyCode key) override;
         virtual void EventButtonDown(MouseButtonType button, int x, int y) override;
         virtual void EventButtonUp(MouseButtonType button, int x, int y) override;
+        virtual void EventWheel(int delta) override;
 
         virtual void Tick(float dt) override;
     };

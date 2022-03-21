@@ -87,10 +87,12 @@ namespace Volumatrix {
                 process_density(ctx.delta_length.x);
                 ctx.voxel_location.y += ctx.direction.x;
                 vec3 last_light = vec3(ctx.voxel_data.xyz) / 256.0;
+                uint last_material_idx = ctx.voxel_data.w;
                 ctx.voxel_data = get_voxel();
                 ctx.material = materials[ctx.voxel_data.w];
-                ctx.result_color += ctx.ray_color * ctx.material.color.xyz * ctx.material.options.x * (default_light * 0.7 + last_light) * 3.0;
-                ctx.ray_color *= 1.0 - ctx.material.options.x;
+                float reflection = (ctx.voxel_data.w == last_material_idx) ? 0.0 : ctx.material.options.x;
+                ctx.result_color += ctx.ray_color * ctx.material.color.xyz * reflection * (default_light * 0.7 + last_light) * 3.0;
+                ctx.ray_color *= 1.0 - reflection;
                 ctx.delta_length.x += ctx.step.x;
             }
 
@@ -99,10 +101,12 @@ namespace Volumatrix {
                 process_density(ctx.delta_length.y);
                 ctx.voxel_location.z += ctx.direction.y;
                 vec3 last_light = vec3(ctx.voxel_data.xyz) / 256.0;
+                uint last_material_idx = ctx.voxel_data.w;
                 ctx.voxel_data = get_voxel();
                 ctx.material = materials[ctx.voxel_data.w];
-                ctx.result_color += ctx.material.color.xyz * ctx.material.options.x * ctx.ray_color * (default_light * 0.7 + last_light) * 3.0;
-                ctx.ray_color *= 1.0 - ctx.material.options.x;
+                float reflection = (ctx.voxel_data.w == last_material_idx) ? 0.0 : ctx.material.options.x;
+                ctx.result_color += ctx.material.color.xyz * reflection * ctx.ray_color * (default_light * 0.7 + last_light) * 3.0;
+                ctx.ray_color *= 1.0 - reflection;
                 ctx.delta_length.y += ctx.step.y;
             }
 
@@ -129,10 +133,12 @@ namespace Volumatrix {
 
                 for (int i = 0; i < GRID_X_SIZE; ++i) {
                     vec3 last_light = vec3(ctx.voxel_data.xyz) / 256.0;
+                    uint last_material_idx = ctx.voxel_data.w;
                     ctx.voxel_data = get_voxel();
                     ctx.material = materials[ctx.voxel_data.w];
-                    ctx.result_color += ctx.material.color.xyz * ctx.ray_color * ctx.material.options.x * (default_light + last_light) * 3.0;
-                    ctx.ray_color *= 1.0 - ctx.material.options.x;
+                    float reflection = (ctx.voxel_data.w == last_material_idx) ? 0.0 : ctx.material.options.x;
+                    ctx.result_color += ctx.material.color.xyz * ctx.ray_color * reflection * (default_light + last_light) * 3.0;
+                    ctx.ray_color *= 1.0 - reflection;
 
                     ctx.last_intersect = 0.0;
                     if (ctx.delta_length.y < ctx.delta_length.x) y_intersect();

@@ -93,7 +93,7 @@ namespace VoxelEditor {
 
 
     void MainScene::Tick(float dt) {
-        if (!update_grid) return;
+        // if (!update_grid) return;
         game.grid.Clear();
         game.grid.StorePoints(result, { 0, 0, 0 });
         update_grid = false;

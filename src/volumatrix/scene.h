@@ -25,6 +25,6 @@ namespace Volumatrix {
         virtual void EventButtonUp(MouseButtonType button, int x, int y) { }
         virtual void EventWheel(int delta) { }
 
-        virtual ~Scene() {}
+        virtual ~Scene() { }
     };
 }

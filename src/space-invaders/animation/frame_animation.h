@@ -16,6 +16,8 @@ class FrameAnimation {
 
 public:
 
+    FrameAnimation();
+
     template <size_t FrameCount, size_t FrameSize>
     static FrameAnimation Create(GLubyte (&frames)[FrameCount][FrameSize] , size_t x, size_t y, size_t z, float period){
         FrameAnimation animation{ FrameCount, period };

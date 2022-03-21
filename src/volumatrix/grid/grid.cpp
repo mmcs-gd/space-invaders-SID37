@@ -122,11 +122,12 @@ namespace Volumatrix {
                         CutLength(buffer_p1.y, buffer_p2.y - 1, y),
                         CutLength(buffer_p1.z, buffer_p2.z - 1, z),
                     };
+
                     if (cut.x == 0 && cut.y == 0 && cut.z == 0 ) {
-                        data.Get(from.x + x, from.y + y, from.z + z).light += color;
+                        data.Get(from.x + x, from.y + y, from.z + z).light += color * 20;
                         continue;
                     }
-                    int dist = std::max(std::abs(cut.x), std::max(std::abs(cut.y), std::abs(cut.z)));
+                    int dist = std::sqrt(cut.x * cut.x + cut.y * cut.y + cut.z * cut.z);
                     data.Get(from.x + x, from.y + y, from.z + z).light += color * (20 * light_buffer.Get(x, y, z) / (dist * dist));
                 }
         update_grid = true;

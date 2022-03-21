@@ -2,6 +2,11 @@
 
 #include "volumatrix/tools/logger.h"
 
+
+FrameAnimation::FrameAnimation():
+        FrameAnimation(0, 0) {
+}
+
 FrameAnimation::FrameAnimation(size_t FrameCount, float period):
         frame_data(FrameCount),
         period(period),

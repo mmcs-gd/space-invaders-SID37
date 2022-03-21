@@ -1,7 +1,6 @@
 #pragma once
 
 #include "space-invaders/animation/frame_animation.h"
-#include "space-invaders/entities/invader_entity.h"
 #include "space-invaders/assets/assets.h"
 #include "volumatrix/scene.h"
 #include "volumatrix/game.h"
