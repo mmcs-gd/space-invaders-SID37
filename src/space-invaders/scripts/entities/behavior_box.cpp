@@ -5,15 +5,23 @@
 namespace SpaceInvaders {
 
     BehaviorBox::BehaviorBox(
-        std::function<Volumatrix::Point(float)> action,
-        std::initializer_list<BehaviorBox> children,
-        std::initializer_list<std::shared_ptr<Invader>> invaders,
-        float start_time):
+        std::function<Volumatrix::Point(float)> action, float start_time):
             action(action),
-            children(children),
-            invaders(invaders),
+            children(),
+            invaders(),
             time(start_time) {
         }
+
+
+    BehaviorBox& BehaviorBox::AddChild(BehaviorBox&& child) {
+        children.push_back(child);
+        return children.back();
+    }
+
+    void BehaviorBox::AddInvader(std::shared_ptr<Invader> invader) {
+        invaders.push_back(invader);
+    }
+
 
     void BehaviorBox::Tick(float dt, const Volumatrix::Point& parent_position) {
         time += dt;
@@ -21,7 +29,7 @@ namespace SpaceInvaders {
         for (auto invader: invaders) {
             invader->SetPosition(point);
         }
-        for (auto child: children) {
+        for (auto& child: children) {
             child.Tick(dt, point);
         }
     }

@@ -22,9 +22,19 @@ namespace Volumatrix {
 
     void Grid::StorePoints(const Vector3<GLubyte>& points, const Point& shift) {
         Point size{ points.XSize(), points.YSize(), points.ZSize() };
-        for (int z = 0; z < size.z; ++z)
-            for (int y = 0; y < size.y; ++y)
-                for (int x = 0; x < size.x; ++x) {
+        Point from{
+            shift.x < 0 ? -shift.x : 0,
+            shift.y < 0 ? -shift.y : 0,
+            shift.z < 0 ? -shift.z : 0,
+        };
+        Point to{
+            shift.x + size.x >= data.XSize() ? data.XSize() - shift.x : size.x,
+            shift.y + size.y >= data.YSize() ? data.YSize() - shift.y : size.y,
+            shift.z + size.z >= data.ZSize() ? data.ZSize() - shift.z : size.z,
+        };
+        for (int z = from.z; z < to.z; ++z)
+            for (int y = from.y; y < to.y; ++y)
+                for (int x = from.x; x < to.x; ++x) {
                     GLubyte value = points.Get(x, y, z);
                     if (value != 0) {
                         data.Get(shift.x + x, shift.y + y, shift.z + z).material = value;
@@ -78,6 +88,8 @@ namespace Volumatrix {
 
 
     void Grid::AddLightSource(GridColor color, Point p1, Point p2) {
+        p1 = { std::max(p1.x, 0), std::max(p1.y, 0), std::max(p1.z, 0)};
+        p2 = { std::min(p2.x, data.XSize()), std::min(p2.y, data.YSize()), std::min(p2.z, data.ZSize())};
         int max_distance = (int)std::sqrt(std::max(std::max(color.r, color.g), color.b)) * 2;
         Point from {
             std::max(p1.x - max_distance, 0),

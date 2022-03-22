@@ -24,11 +24,13 @@ namespace SpaceInvaders {
             Volumatrix::Point size, Volumatrix::Point position, GLubyte material,
             Volumatrix::GridColor light, float speed, float damage = 1);
 
+        void SetPosition(const Volumatrix::Point& new_position);
         const Volumatrix::Point& Size() const;
         const Volumatrix::Point& Position() const;
         float Damage() const;
         float Speed() const;
 
+        void Delete();
         void Tick(float dt);
         void Draw(Volumatrix::Grid& grid) const;
         void Illuminate(Volumatrix::Grid& grid) const;

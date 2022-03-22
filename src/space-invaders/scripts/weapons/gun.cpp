@@ -19,7 +19,7 @@ namespace SpaceInvaders {
 
         world.AddBullet(Bullet(world,
                 {1, 1, bullet_height},
-                world.player.Position() + Volumatrix::Point{2, (world.player.mesh_width + 1) / 2, -bullet_height},
+                world.player.Position() + Volumatrix::Point{2, world.player.mesh_width / 2, -bullet_height},
                 world.COLOR_BULLET, {10, 30, 0}, -100));
     }
 

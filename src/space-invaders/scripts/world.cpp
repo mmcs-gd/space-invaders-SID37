@@ -71,29 +71,29 @@ namespace SpaceInvaders {
         Redraw();
     }
 
+
     void World::AddDecoration(std::shared_ptr<Decoration> decoration) {
         decorations.push_back(decoration);
         Redraw();
     }
 
-    void World::AddBullet(Bullet&& bullet) {
-        bullets.push_back(std::make_shared<Bullet>(bullet));
-        Redraw();
-    }
 
-    void World::AddBehavior(BehaviorBox&& behavior) {
+    std::shared_ptr<BehaviorBox> World::AddBehavior(BehaviorBox&& behavior) {
         behavior_boxes.push_back(std::make_shared<BehaviorBox>(behavior));
         Redraw();
+        return behavior_boxes.back();
     }
 
-    std::shared_ptr<Invader> World::MakeInvader(FrameAnimation&& animation, float hp,  std::initializer_list<std::tuple<GLubyte, ColorIndex>> colors) {
-        for (const auto& c: colors) {
-            animation.Replace(std::get<0>(c), std::get<1>(c));
-        }
-        auto ptr = std::make_shared<Invader>(*this, animation, hp);
-        invaders.push_back(ptr);
+    std::shared_ptr<Invader> World::AddInvader(Invader&& invader) {
+        invaders.push_back(std::make_shared<Invader>(invader));
         Redraw();
-        return ptr;
+        return invaders.back();
+    }
+
+    std::shared_ptr<Bullet> World::AddBullet(Bullet&& bullet) {
+        bullets.push_back(std::make_shared<Bullet>(bullet));
+        Redraw();
+        return bullets.back();
     }
 
 
@@ -147,6 +147,7 @@ namespace SpaceInvaders {
                     std::swap(vect[j], vect[j + 1]);
                 }
             }
+            vect.back()->Delete();
             vect.pop_back();
         }
     }

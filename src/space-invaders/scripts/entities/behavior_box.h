@@ -22,10 +22,10 @@ namespace SpaceInvaders {
 
     public:
         BehaviorBox(
-            std::function<Volumatrix::Point(float)> action,
-            std::initializer_list<BehaviorBox> children,
-            std::initializer_list<std::shared_ptr<Invader>> invaders = {},
-            float start_time = 0);
+            std::function<Volumatrix::Point(float)> action, float start_time = 0);
+
+        BehaviorBox& AddChild(BehaviorBox&& child);
+        void AddInvader(std::shared_ptr<Invader> invader);
 
         void Tick(float dt);
     };

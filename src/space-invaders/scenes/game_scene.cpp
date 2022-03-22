@@ -6,7 +6,7 @@ namespace SpaceInvaders {
 
     GameScene::GameScene(Volumatrix::Game& game):
             game(game),
-            world(game.grid) {
+            world(game.grid, 0) {
     }
 
 

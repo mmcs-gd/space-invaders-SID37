@@ -16,6 +16,7 @@ namespace SpaceInvaders {
 
         Decoration(World& world): world(world), alive(true) { }
 
+        virtual void Delete() { }
         virtual void Tick(float dt) { }
         virtual void Draw(Volumatrix::Grid& grid) { }
         virtual void Illuminate(Volumatrix::Grid& grid) { }

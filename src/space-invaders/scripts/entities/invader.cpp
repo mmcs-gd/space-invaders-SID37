@@ -19,9 +19,13 @@ namespace SpaceInvaders {
         bullet->alive = false;
         hp -= bullet->Damage();
         if (hp <= 0) {
-            world.AddDecoration(std::make_shared<Explosion>(world, position + Size() / 2, Volumatrix::GridColor{20, 10, 0}, 10, 7, 100, 15, 30, 2, 0.2));
             alive = false;
         }
+    }
+
+
+    void Invader::AddGun(Bullet&& bullet, Volumatrix::Point shift, float period, float start_time) {
+        guns.push_back(InternalGun{bullet, shift, period, start_time});
     }
 
 
@@ -37,14 +41,25 @@ namespace SpaceInvaders {
     void Invader::SetPosition(const Volumatrix::Point& p) {
         if (position == p) return;
         position = p;
-        if (position.z + Size().z > world.player.Position().z) {
-            world.Restart();
-        }
         world.Redraw();
     }
 
     void Invader::Tick(float dt) {
         animation.Tick(dt);
+        if (position.z + Size().z > world.player.Position().z) {
+            world.Restart();
+        }
+        for (auto& gun: guns) {
+            for (gun.time = gun.time + dt; gun.time >= gun.period; gun.time -= gun.period) {
+                Bullet bullet = gun.bullet;
+                bullet.SetPosition(position + gun.shift);
+                world.AddBullet(std::move(bullet));
+            }
+        }
+    }
+
+    void Invader::Delete() {
+        world.AddDecoration(std::make_shared<Explosion>(world, position + Size() / 2, Volumatrix::GridColor{20, 10, 0}, 10, 7, 100, 15, 30, 2, 0.2));
     }
 
     void Invader::Draw(Volumatrix::Grid& grid) const {

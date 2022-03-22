@@ -25,7 +25,9 @@ namespace SpaceInvaders {
             time(start_time),
             size(size),
             mesh(size, size, size) {
-
+        if (size > 10 || size < 0) {
+            Volumatrix::Logger::Log("Explosion", "Hm...");
+        }
         for (int i = 0; i < particle_count; ++i) {
             trajectoryes.push_back({
                 (rand() > RAND_MAX / 2 ? 1 : -1) * (speed_from + rand() * (speed_to - speed_from) / float(RAND_MAX)),

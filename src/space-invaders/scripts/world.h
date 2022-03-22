@@ -68,9 +68,9 @@ namespace SpaceInvaders {
         void InputGun(int index);
 
         void AddDecoration(std::shared_ptr<Decoration> decoration);
-        void AddBullet(Bullet&& bullet);
-        void AddBehavior(BehaviorBox&& behavior);
-        std::shared_ptr<Invader> MakeInvader(FrameAnimation&& animation, float hp, std::initializer_list<std::tuple<GLubyte, ColorIndex>> colors = {});
+        std::shared_ptr<BehaviorBox> AddBehavior(BehaviorBox&& behavior);
+        std::shared_ptr<Invader> AddInvader(Invader&& invader);
+        std::shared_ptr<Bullet> AddBullet(Bullet&& bullet);
 
         void Restart();
 
