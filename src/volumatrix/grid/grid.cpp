@@ -1,4 +1,6 @@
 #include "volumatrix/grid/grid.h"
+#include "volumatrix/tools/logger.h"
+
 
 #include <cstring>
 #include <cmath>
@@ -102,6 +104,10 @@ namespace Volumatrix {
             std::min(p2.z + max_distance, (int)data.ZSize())
         };
         Point buffer_size = to - from;
+        if (buffer_size.x <= 0 || buffer_size.y <= 0 || buffer_size.z <= 0) {
+            Logger::Log("Grid", "Empty light source");
+            return;
+        }
         light_buffer.Resize(buffer_size);
 
         Point light_size = p2 - p1;

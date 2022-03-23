@@ -7,6 +7,7 @@ namespace SpaceInvaders {
     LaserRay::LaserRay(World& world, int max_length, GLubyte material, Volumatrix::GridColor light):
             Decoration(world),
             mesh(1, 1, max_length),
+            position{0, 0, 0},
             light(light),
             material(material) {
         
