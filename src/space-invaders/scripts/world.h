@@ -67,6 +67,10 @@ namespace SpaceInvaders {
         void InputShoot(bool value);
         void InputGun(int index);
 
+
+        std::shared_ptr<Invader> HitLaser(Volumatrix::Point pos, Volumatrix::Point size);
+        std::shared_ptr<Invader> HitLightning();
+
         void AddDecoration(std::shared_ptr<Decoration> decoration);
         std::shared_ptr<BehaviorBox> AddBehavior(BehaviorBox&& behavior);
         std::shared_ptr<Invader> AddInvader(Invader&& invader);

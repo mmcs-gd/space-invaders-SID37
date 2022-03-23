@@ -36,6 +36,7 @@ namespace SpaceInvaders {
 
         void Delete();
         void Hit(std::shared_ptr<Bullet> bullet);
+        void Hit(float damage);
 
         Volumatrix::Point Size() const;
         const Volumatrix::Point& Position() const;

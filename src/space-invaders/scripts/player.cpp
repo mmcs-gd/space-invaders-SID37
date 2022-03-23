@@ -12,14 +12,13 @@ namespace SpaceInvaders {
             mesh(),
             position(start_point),
             location(start_point.y) {
-        mesh = FrameAnimation::Create(Assets::player_1, 5, 13, 7, 1.0f);
         world.UpdateMaterial(World::COLOR_PLAYER, {{0.3, 0.7, 0.0}, 1});
+        UpdateMesh({6, 13, 13, Assets::player_gun[0]});
     }
 
 
     Volumatrix::Point Player::Size() const {
-        const auto& frame = mesh.GetFrame();
-        return { frame.XSize(), frame.YSize(), frame.ZSize() };
+        return { mesh.XSize(), mesh.YSize(), mesh.ZSize() };
     }
 
     void Player::SetDirection(Direction d) {
@@ -38,12 +37,13 @@ namespace SpaceInvaders {
     }
 
 
-    void Player::Tick(float dt) {
-        mesh.Tick(dt);
-        if (mesh.UpdateRequired()) {
-            world.Redraw();
-        }
+    void Player::UpdateMesh(Volumatrix::Vector3<GLubyte>&& new_mesh) {
+        mesh = new_mesh;
+        new_mesh.Replace(1, world.COLOR_PLAYER);
+        world.Redraw();
+    }
 
+    void Player::Tick(float dt) {
 
         int k = direction == RIGHT_DIRECTION ? 1 : direction == LEFT_DIRECTION ? -1 : 0;
 
@@ -59,6 +59,6 @@ namespace SpaceInvaders {
 
 
     void Player::Draw(Volumatrix::Grid& grid) const {
-        mesh.Draw(grid, position);
+        grid.StorePoints(mesh, position);
     }
 }

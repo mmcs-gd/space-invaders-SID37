@@ -16,8 +16,7 @@ namespace SpaceInvaders {
     class Player {
         const float speed = 50;
 
-        FrameAnimation mesh;
-
+        Volumatrix::Vector3<GLubyte> mesh;
         World& world;
         Volumatrix::Point position;
 
@@ -33,7 +32,7 @@ namespace SpaceInvaders {
 
         void Hit(std::shared_ptr<Bullet> bullet);
 
-
+        void UpdateMesh(Volumatrix::Vector3<GLubyte>&& new_mesh);
         void SetDirection(Direction d);
         const Volumatrix::Point& Position() const;
 

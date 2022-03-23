@@ -6,12 +6,16 @@
 
 namespace SpaceInvaders {
 
-    class Gun: public Weapon {
-        float reload_peroid;
-        float reload_time;
+    class Twix: public Weapon {
+        float period;
+        float reserve;
+        float recovery_speed;
+        float current_bullets;
+        float time;
+        bool left_gun;
 
     public:
-        Gun(World& world, float reload_peroid);
+        Twix(World& world, float period, float reserve, float recovery_speed);
 
         virtual void Activate() override;
         virtual void Shot() override;

@@ -44,7 +44,7 @@ namespace SpaceInvaders {
 
     void Bullet::Delete() {
         auto size = Size();
-        world.AddDecoration(std::make_shared<Explosion>(world, position + size / 2, light * 0.5, 10, std::max(size.x, std::max(size.y, size.z)), 20, 15, 30, 1, 0));
+        world.AddDecoration(std::make_shared<Explosion>(world, position + size / 2, light * 0.5, 10, std::max(size.x, std::max(size.y, size.z)), 100, 5, 10, 1, 0));
     }
 
     void Bullet::Tick(float dt) {

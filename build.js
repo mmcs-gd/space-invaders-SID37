@@ -10,8 +10,8 @@ const output_js = process.argv[4]
 
 
 const flag_list = {
-    "release": "-O3 -s USE_SDL=2 -s MIN_WEBGL_VERSION=2 -s MAX_WEBGL_VERSION=3 -fexceptions",
-    "debug": "-g -o dist/index.js -s USE_SDL=2 -s MIN_WEBGL_VERSION=2 -s MAX_WEBGL_VERSION=3 -fexceptions -D DEBUG=1"
+    "release": "-O3 -s USE_SDL=2 -s MIN_WEBGL_VERSION=2 -s MAX_WEBGL_VERSION=3 -fexceptions -s INITIAL_MEMORY=67108864",
+    "debug": "-g -s USE_SDL=2 -s MIN_WEBGL_VERSION=2 -s MAX_WEBGL_VERSION=3 -fexceptions -D DEBUG=1 -s INITIAL_MEMORY=67108864"
 };
 
 if (process.argv.includes("-h") || process.argv.length < 5) {

@@ -23,6 +23,14 @@ namespace SpaceInvaders {
         }
     }
 
+    void Invader::Hit(float damage) {
+        hp -= damage;
+        if (hp <= 0) {
+            alive = false;
+        }
+    }
+
+
 
     void Invader::AddGun(Bullet&& bullet, Volumatrix::Point shift, float period, float start_time) {
         guns.push_back(InternalGun{bullet, shift, period, start_time});

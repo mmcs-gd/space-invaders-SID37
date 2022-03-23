@@ -6,12 +6,12 @@
 
 namespace SpaceInvaders {
 
-    class Gun: public Weapon {
+    class Lightning: public Weapon {
         float reload_peroid;
         float reload_time;
 
     public:
-        Gun(World& world, float reload_peroid);
+        Lightning(World& world, float reload_peroid);
 
         virtual void Activate() override;
         virtual void Shot() override;

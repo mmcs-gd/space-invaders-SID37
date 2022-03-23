@@ -2,6 +2,9 @@
 
 #include "space-invaders/scripts/weapons/weapon.h"
 #include "space-invaders/scripts/weapons/gun.h"
+#include "space-invaders/scripts/weapons/twix.h"
+#include "space-invaders/scripts/weapons/laser.h"
+#include "space-invaders/scripts/weapons/lightning.h"
 #include "space-invaders/scripts/levels/levels.h"
 #include "space-invaders/scripts/decorations/cloud.h"
 
@@ -28,7 +31,10 @@ namespace SpaceInvaders {
             grid(grid),
             level(start_level),
             weapons({
-                std::make_shared<Gun>(*this, 1.5)
+                std::make_shared<Gun>(*this, 1.5),
+                std::make_shared<Twix>(*this, 0.2, 10, 0.1),
+                std::make_shared<Laser>(*this, 2, 5, 0.2),
+                std::make_shared<Lightning>(*this, 20),
             }),
             bullets(),
             invaders(),
@@ -39,6 +45,12 @@ namespace SpaceInvaders {
         UpdateMaterial(COLOR_BULLET, {{1, 1, 1}, 0.5, 1});
         UpdateMaterial(COLOR_CLOUD, {{1, 1, 1}, 0.1, 0.5});
         UpdateMaterial(COLOR_FOG, {{1, 1, 1}, 0, 0.3});
+
+        UpdateMaterial(COLOR_GUN, {{0.3, 0.5, 0}, 0.7, 0.5});
+        UpdateMaterial(COLOR_TWIX, {{0.3, 0.3, 0.5}, 0.7, 0.5});
+        UpdateMaterial(COLOR_LASER, {{0.6, 0, 0}, 0.7, 0.5});
+        UpdateMaterial(COLOR_LIGHTNING, {{0.7, 0.7, 0.7}, 0.7, 0.5});
+
         Levels::Init(*this, level);
         for (int i = 0; i < 50; ++i) {
             float z = rand() / float(RAND_MAX);
@@ -134,6 +146,33 @@ namespace SpaceInvaders {
     }
 
 
+    std::shared_ptr<Invader> World::HitLaser(Volumatrix::Point pos, Volumatrix::Point size) {
+        int last_distance = -1;
+        std::shared_ptr<Invader> result = nullptr;
+        for (auto invader: invaders) {
+            if (CollideBoxes(pos, size, invader->Position(), invader->Size())) {
+                int distance = invader->Position().z + invader->Size().z;
+                if (distance > last_distance) result = invader;
+            }
+        }
+        return result;
+    }
+
+
+    std::shared_ptr<Invader> World::HitLightning() {
+        int last_distance = 256;
+        std::shared_ptr<Invader> result = nullptr;
+        for (auto invader: invaders) {
+            int distance = invader->Position().z;
+            if (distance < last_distance) {
+                last_distance = distance;
+                result = invader;
+            }
+        }
+        return result;
+    }
+
+
     template<typename T>
     void DeleteNotAlive(std::vector<std::shared_ptr<T>>& vect) {
         int count = 0;
@@ -213,11 +252,11 @@ namespace SpaceInvaders {
         player.Draw(grid);
         for (int i = 0; i < weapons.size(); ++i) {
             Volumatrix::Point p {
-                i == current_weapon ? 0 : 4,
+                i == current_weapon ? 1 : 4,
                 i * Weapon::icon_width,
                 230
             };
-            grid.StorePoints(weapons[i]->GetIcon(), p);
+            weapons[i]->Draw(grid, p);
         }
 
         for (auto bullet: bullets) {
@@ -237,5 +276,8 @@ namespace SpaceInvaders {
         for (auto bullet: bullets) {
             bullet->Illuminate(grid);
         }
+
+        Volumatrix::Point current_veapo_point = { 0, current_weapon * Weapon::icon_width, 230};
+        grid.AddLightSource({5, 5, 5}, current_veapo_point, current_veapo_point + Volumatrix::Point{ 3, Weapon::icon_width, 16});
     }
 }
