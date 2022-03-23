@@ -15,6 +15,7 @@ namespace SpaceInvaders {
         void level_3(World& world);
         void level_4(World& world);
         void level_5(World& world);
+        void level_6(World& world);
 
         std::vector<void(*)(World& world)> level_list {
             level_1,
@@ -22,6 +23,7 @@ namespace SpaceInvaders {
             level_3,
             level_4,
             level_5,
+            level_6,
         };
 
 
@@ -45,6 +47,13 @@ namespace SpaceInvaders {
                 return point + Volumatrix::Point{0,
                     (int)(r * std::sin(angle)),
                     (int)(-r * std::cos(angle))
+                };
+            }
+
+            Volumatrix::Point ellips_point(Volumatrix::Point point, float rx, float ry, float angle) {
+                return point + Volumatrix::Point{0,
+                    (int)(rx * std::sin(angle)),
+                    (int)(-ry * std::cos(angle))
                 };
             }
         }
@@ -143,7 +152,7 @@ namespace SpaceInvaders {
                     int step = discretize(t, 1);
                     return Volumatrix::Point{2, 0, 40 + step * 5};
                 }});
-            FrameAnimation invader1_animation = FrameAnimation::Create(Assets::invader_1, 6, 8, 8, 1);
+            FrameAnimation invader1_animation = FrameAnimation::Create(Assets::invader_1, 6, 8, 8, 0.3);
             FrameAnimation invader2_animation = FrameAnimation::Create(Assets::invader_2, 5, 11, 8, 1);
             invader1_animation.Replace(2, World::COLOR_INVADER_0);
             invader1_animation.Replace(1, World::COLOR_INVADER_2);
@@ -169,5 +178,63 @@ namespace SpaceInvaders {
                 }
             }
         }
+
+
+        void level_6(World& world) {
+            world.UpdateMaterial(World::COLOR_INVADER_0, {{0, 0, 0}, 1});
+            world.UpdateMaterial(World::COLOR_INVADER_1, {{0.7, 0.3, 0.0}, 1});
+            world.UpdateMaterial(World::COLOR_INVADER_2, {{0.5, 0.5, 0.5}, 1});
+            world.UpdateMaterial(World::COLOR_INVADER_3, {{0.4, 0, 0.5}, 1});
+
+            auto main_box = world.AddBehavior(BehaviorBox{
+                [] (float t) mutable {
+                    int step = discretize(t, 2);
+                    return Volumatrix::Point{2, 0, 40 + step * 5};
+                }});
+            FrameAnimation invader1_animation = FrameAnimation::Create(Assets::invader_1, 6, 8, 8, 1);
+            FrameAnimation invader2_animation = FrameAnimation::Create(Assets::invader_2, 5, 11, 8, 1);
+            FrameAnimation invader3_animation = FrameAnimation::Create(Assets::invader_3, 6, 14, 8, 1);
+            invader1_animation.Replace(2, World::COLOR_INVADER_0);
+            invader1_animation.Replace(1, World::COLOR_INVADER_2);
+            invader2_animation.Replace(2, World::COLOR_INVADER_0);
+            invader2_animation.Replace(1, World::COLOR_INVADER_1);
+            invader3_animation.Replace(2, World::COLOR_INVADER_0);
+            invader3_animation.Replace(1, World::COLOR_INVADER_3);
+
+            for (int i = 0; i < 3; ++i) {
+                Volumatrix::Point center { 0, 80 + i * 30, 0 };
+                auto& box = main_box->AddChild(BehaviorBox{[center = center](float t) { return center; }});
+                auto invader = world.AddInvader(Invader{world, invader3_animation, 3});
+                auto invader_size = invader->Size();
+                invader->AddGun(
+                    Bullet{world, {1, 1, 3}, {0, 0, 0}, World::COLOR_BULLET, { 20, 0, 20 }, 100},
+                    {invader_size.x / 2, invader_size.y / 2 - 1, invader_size.z + 7},
+                    2, 2.0 * i / 3);
+                box.AddInvader(invader);
+            }
+
+            Volumatrix::Point main_center { 0, 112, 0 };
+            int count = 10;
+            for (int i = 0; i < count; ++i) {
+                auto& box = main_box->AddChild(BehaviorBox{
+                    [i, count, main_center](float t) {
+                        float angle_step = 2 * pi / (count * 6);
+                        t = (discretize(t, 1.0f / 3) + i * 6 + 1) * angle_step;
+                        return ellips_point(main_center, 80, 30, t);
+                    }
+                });
+                box.AddInvader(world.AddInvader(Invader{world, invader1_animation, 0.5}));
+            }
+
+            for (int i = 0; i < 2; ++i) {
+                Volumatrix::Point center { 0, 10 + i * 182, 40 };
+                auto& module_box = main_box->AddChild(BehaviorBox{[center = center](float t) { return center; }});
+                auto invader = world.AddInvader(Invader{world, invader2_animation, 1});
+                auto invader_size = invader->Size();
+                invader->AddGun(Bullet{world, {1, 1, 3}, {0, 0, 0}, World::COLOR_BULLET, { 10, 10, 20 }, 100}, {invader_size.x / 2, invader_size.y / 2 - 1, invader_size.z + 5}, 1);
+                module_box.AddInvader(invader);
+            }
+        }
+
     }
 }
