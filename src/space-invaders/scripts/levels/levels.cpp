@@ -240,6 +240,7 @@ namespace SpaceInvaders {
 
 
         void level_victory(World& world) {
+            world.SetWeaponInfinity(true);
             world.UpdateMaterial(World::COLOR_INVADER_0, {{0, 0, 0}, 1});
             world.UpdateMaterial(World::COLOR_INVADER_1, {{0.5, 0.5, 0.0}, 1});
 

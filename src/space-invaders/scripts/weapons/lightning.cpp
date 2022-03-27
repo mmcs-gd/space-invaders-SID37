@@ -10,9 +10,15 @@ namespace SpaceInvaders {
     Lightning::Lightning(World& world, float reload_peroid):
             Weapon(world, Volumatrix::Vector3<GLubyte>({3, 16, 16}, Assets::lightning_icon), World::COLOR_LIGHTNING),
             reload_peroid(reload_peroid),
-            reload_time(0) {
+            reload_time(0),
+            is_infinity(false) {
     }
 
+
+    void Lightning::SetInfinity(bool value) {
+        is_infinity = value;
+        Reset();
+    }
 
     void Lightning::Reset() {
         reload_time = 0;
@@ -27,7 +33,9 @@ namespace SpaceInvaders {
 
     void Lightning::Shot() {
         if (reload_time > 0) return;
-        reload_time = reload_peroid;
+        if (!is_infinity) {
+            reload_time = reload_peroid;
+        }
         int bullet_height = 3;
 
         int max_height = 100;

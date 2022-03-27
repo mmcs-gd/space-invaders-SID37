@@ -9,10 +9,12 @@ namespace SpaceInvaders {
     class Lightning: public Weapon {
         float reload_peroid;
         float reload_time;
+        bool is_infinity;
 
     public:
         Lightning(World& world, float reload_peroid);
 
+        virtual void SetInfinity(bool value) override;
         virtual void Reset() override;
         virtual void Activate() override;
         virtual void Shot() override;

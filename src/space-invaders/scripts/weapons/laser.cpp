@@ -19,6 +19,12 @@ namespace SpaceInvaders {
     }
 
 
+    void Laser::SetInfinity(bool value) {
+        Reset();
+        is_infinity = value;
+    }
+
+
     void Laser::Reset() {
         current_time = reserve_time;
         SetProgress(1);
@@ -50,7 +56,9 @@ namespace SpaceInvaders {
     void Laser::Tick(float dt) {
         int last_progress = int(16 * current_time / reserve_time);
         if (shot) {
-            current_time -= dt;
+            if (!is_infinity) {
+                current_time -= dt;
+            }
             animation_time += dt;
             auto pos = world.player.Position();
             auto size = world.player.Size();

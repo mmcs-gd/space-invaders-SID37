@@ -34,7 +34,7 @@ namespace SpaceInvaders {
             weapons({
                 std::make_shared<Gun>(*this, 1.5),
                 std::make_shared<Twix>(*this, 0.2, 10, 0.1),
-                std::make_shared<Laser>(*this, 2, 5, 0.2),
+                std::make_shared<Laser>(*this, 2, 5, 0.1),
                 std::make_shared<Lightning>(*this, 20),
             }),
             bullets(),
@@ -139,6 +139,12 @@ namespace SpaceInvaders {
         pause_time = 0.5;
     }
 
+
+    void World::SetWeaponInfinity(bool value) {
+        for (auto weapon: weapons) {
+            weapon->SetInfinity(value);
+        }
+    }
 
     int World::WeaponsCount() {
         return weapons.size();

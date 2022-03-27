@@ -13,6 +13,7 @@ namespace SpaceInvaders {
     public:
         Gun(World& world, float reload_peroid);
 
+        virtual void SetInfinity(bool value) override;
         virtual void Reset() override;
         virtual void Activate() override;
         virtual void Shot() override;

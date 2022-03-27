@@ -13,9 +13,15 @@ namespace SpaceInvaders {
             recovery_speed(recovery_speed),
             current_bullets(reserve),
             time(0),
-            left_gun(true) {
+            left_gun(true),
+            is_infinity(false) {
     }
 
+
+    void Twix::SetInfinity(bool value) {
+        Reset();
+        is_infinity = value;
+    }
 
     void Twix::Activate() {
         world.player.UpdateMesh({6, 13, 13, Assets::player_twix[0]});
@@ -35,8 +41,10 @@ namespace SpaceInvaders {
                 world.player.Position() + Volumatrix::Point{2, world.player.mesh_width / 2 + bullet_shift, -bullet_height},
                 world.COLOR_BULLET, {0, 10, 30}, -100));
 
+        if (!is_infinity) {
+            current_bullets -= 1;
+        }
         left_gun = !left_gun;
-        current_bullets -= 1;
         time = 0;
         SetProgress(current_bullets / reserve);
     }

@@ -64,6 +64,7 @@ namespace SpaceInvaders {
 
         void UpdateMaterial(ColorIndex idx, const Volumatrix::GridMaterial& material);
 
+        void SetWeaponInfinity(bool value = true);
         void InputDirection(Direction direction);
         void InputShoot(bool value);
         void InputGun(int index);

@@ -13,6 +13,10 @@ namespace SpaceInvaders {
     }
 
 
+    void Gun::SetInfinity(bool value) {
+        Reset();
+    }
+
     void Gun::Reset() {
         reload_time = 0;
         SetProgress(1);

@@ -20,10 +20,12 @@ namespace SpaceInvaders {
         int animation_frame = 0;
         bool last_shot = false;
         bool activated = false;
+        bool is_infinity = false;
 
     public:
         Laser(World& world, float damage, float reserve_time, float recovery_speed);
 
+        virtual void SetInfinity(bool value) override;
         virtual void Reset() override;
         virtual void Activate() override;
         virtual void Disactivate() override;

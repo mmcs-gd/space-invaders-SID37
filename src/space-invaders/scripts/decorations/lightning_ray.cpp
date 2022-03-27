@@ -16,8 +16,8 @@ namespace SpaceInvaders {
                     mesh.Get(x, y, z) = world.COLOR_EMPTY;
         Volumatrix::Point p { rand() % size.x, rand() % size.y, 0};
         for (p.z = 0; p.z < size.z; ++p.z) {
-            p.x = std::max(0, std::min(size.x, p.x + (rand() > RAND_MAX / 2 ? -1 : 1)));
-            p.y = std::max(0, std::min(size.y, p.y + (rand() > RAND_MAX / 2 ? -1 : 1)));
+            p.x = std::max(0, std::min(size.x - 1, p.x + (rand() > RAND_MAX / 2 ? -1 : 1)));
+            p.y = std::max(0, std::min(size.y - 1, p.y + (rand() > RAND_MAX / 2 ? -1 : 1)));
             mesh.Get(p) = world.COLOR_BULLET;
         }
     }

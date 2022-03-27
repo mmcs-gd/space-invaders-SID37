@@ -13,10 +13,12 @@ namespace SpaceInvaders {
         float current_bullets;
         float time;
         bool left_gun;
+        bool is_infinity;
 
     public:
         Twix(World& world, float period, float reserve, float recovery_speed);
 
+        virtual void SetInfinity(bool value) override;
         virtual void Reset() override;
         virtual void Activate() override;
         virtual void Shot() override;
