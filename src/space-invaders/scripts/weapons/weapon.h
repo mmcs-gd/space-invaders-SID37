@@ -23,6 +23,7 @@ namespace SpaceInvaders {
 
         Weapon(World& world, const Volumatrix::Vector3<GLubyte>& icon, GLubyte material);
 
+        virtual void Reset() = 0;
         virtual void Activate();
         virtual void Disactivate();
         virtual void Shot();

@@ -19,6 +19,12 @@ namespace SpaceInvaders {
     }
 
 
+    void Laser::Reset() {
+        current_time = reserve_time;
+        SetProgress(1);
+    }
+
+
     void Laser::Activate() {
         if (ray == nullptr) {
             ray = std::make_shared<LaserRay>(world, world.player.Position().z + 5, (GLubyte)world.COLOR_BULLET, Volumatrix::GridColor{15, 0, 0});

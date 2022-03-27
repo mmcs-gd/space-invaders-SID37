@@ -24,6 +24,7 @@ namespace SpaceInvaders {
     public:
         Laser(World& world, float damage, float reserve_time, float recovery_speed);
 
+        virtual void Reset() override;
         virtual void Activate() override;
         virtual void Disactivate() override;
         virtual void Shot() override;

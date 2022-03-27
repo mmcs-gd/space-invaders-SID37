@@ -11,6 +11,7 @@ namespace SpaceInvaders {
         extern GLubyte invader_1[2][6 * 8 * 8];
         extern GLubyte invader_2[2][5 * 11 * 8];
         extern GLubyte invader_3[2][6 * 14 * 8];
+        extern GLubyte invader_block[1][6 * 8 * 8];
 
         extern GLubyte player_1[1][5 * 13 * 7];
         extern GLubyte player_gun[2][6 * 13 * 13];

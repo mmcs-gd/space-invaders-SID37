@@ -7,11 +7,12 @@
 
 namespace SpaceInvaders {
 
-    Invader::Invader(World& world, const FrameAnimation& animation, float hp, Volumatrix::Point position):
+    Invader::Invader(World& world, const FrameAnimation& animation, float hp, Volumatrix::Point shift):
             world(world),
             animation(animation),
             hp(hp),
-            position(position) {
+            shift(shift),
+            position(shift) {
     }
 
 
@@ -47,8 +48,9 @@ namespace SpaceInvaders {
     }
 
     void Invader::SetPosition(const Volumatrix::Point& p) {
-        if (position == p) return;
-        position = p;
+        auto new_pos = p + shift;
+        if (position == new_pos) return;
+        position = new_pos;
         world.Redraw();
     }
 

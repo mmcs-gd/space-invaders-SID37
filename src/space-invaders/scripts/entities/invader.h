@@ -25,6 +25,7 @@ namespace SpaceInvaders {
 
         std::vector<InternalGun> guns;
         FrameAnimation animation;
+        Volumatrix::Point shift;
         Volumatrix::Point position;
         World& world;
         float hp;
@@ -32,7 +33,7 @@ namespace SpaceInvaders {
     public:
         bool alive = true;
 
-        Invader(World& world, const FrameAnimation& animation, float hp, Volumatrix::Point position = {0, 0, 0});
+        Invader(World& world, const FrameAnimation& animation, float hp, Volumatrix::Point shift = {0, 0, 0});
 
         void Delete();
         void Hit(std::shared_ptr<Bullet> bullet);

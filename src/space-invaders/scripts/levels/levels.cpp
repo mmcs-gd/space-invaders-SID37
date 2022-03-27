@@ -16,6 +16,7 @@ namespace SpaceInvaders {
         void level_4(World& world);
         void level_5(World& world);
         void level_6(World& world);
+        void level_victory(World& world);
 
         std::vector<void(*)(World& world)> level_list {
             level_1,
@@ -24,6 +25,7 @@ namespace SpaceInvaders {
             level_4,
             level_5,
             level_6,
+            level_victory,
         };
 
 
@@ -234,6 +236,71 @@ namespace SpaceInvaders {
                 invader->AddGun(Bullet{world, {1, 1, 3}, {0, 0, 0}, World::COLOR_BULLET, { 10, 10, 20 }, 100}, {invader_size.x / 2, invader_size.y / 2 - 1, invader_size.z + 5}, 1);
                 module_box.AddInvader(invader);
             }
+        }
+
+
+        void level_victory(World& world) {
+            world.UpdateMaterial(World::COLOR_INVADER_0, {{0, 0, 0}, 1});
+            world.UpdateMaterial(World::COLOR_INVADER_1, {{0.5, 0.5, 0.0}, 1});
+
+            auto main_box = world.AddBehavior(BehaviorBox{[] (float t) { return Volumatrix::Point{2, 30, 50}; }});
+            FrameAnimation invader1_animation = FrameAnimation::Create(Assets::invader_1, 6, 8, 8, 1);
+            FrameAnimation block_animation = FrameAnimation::Create(Assets::invader_block, 6, 8, 8, 1);
+            invader1_animation.Replace(2, World::COLOR_INVADER_0);
+            invader1_animation.Replace(1, World::COLOR_INVADER_1);
+            block_animation.Replace(1, World::COLOR_INVADER_1);
+
+            auto& w_box = main_box->AddChild(BehaviorBox([](float t) { return Volumatrix::Point{ 0, 0, 0 };}));
+            w_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 0, 0})));
+            w_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 32, 0})));
+            w_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 0, 8})));
+            w_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 32, 8})));
+            w_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 0, 16})));
+            w_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 32, 16})));
+            w_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 0, 24})));
+            w_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 16, 24})));
+            w_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 32, 24})));
+            w_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 0, 32})));
+            w_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 16, 32})));
+            w_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 32, 32})));
+            w_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 0, 40})));
+            w_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 16, 40})));
+            w_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 32, 40})));
+            w_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 8, 48})));
+            w_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 24, 48})));
+
+            auto& i_box = main_box->AddChild(BehaviorBox([](float t) { return Volumatrix::Point{ 0, 72, 0 };}));
+            auto& i_dot_box =i_box.AddChild(BehaviorBox([](float t) { return Volumatrix::Point{0, 8, int(-8 * std::sin(t * 2))};}));
+            i_dot_box.AddInvader( world.AddInvader(Invader(world, invader1_animation, 1, {0, 0, 0})));
+            i_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 0, 16})));
+            i_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 8, 16})));
+            i_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 8, 24})));
+            i_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 8, 32})));
+            i_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 8, 40})));
+            i_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 0, 48})));
+            i_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 8, 48})));
+            i_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 16, 48})));
+
+            auto& n_box = main_box->AddChild(BehaviorBox([](float t) { return Volumatrix::Point{ 0, 128, 0 };}));
+            n_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 0, 16})));
+            n_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 16, 16})));
+            n_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 24, 16})));
+            n_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 0, 24})));
+            n_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 8, 24})));
+            n_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 32, 24})));
+            n_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 0, 32})));
+            n_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 32, 32})));
+            n_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 0, 40})));
+            n_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 32, 40})));
+            n_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 0, 48})));
+            n_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 32, 48})));
+
+            auto& e_box = main_box->AddChild(BehaviorBox([](float t) { return Volumatrix::Point{ 0, 192, 0 };}));
+            e_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 0, 8})));
+            e_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 0, 16})));
+            e_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 0, 24})));
+            e_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 0, 32})));
+            e_box.AddInvader(world.AddInvader(Invader(world, block_animation, 1, {0, 0, 48})));
         }
 
     }

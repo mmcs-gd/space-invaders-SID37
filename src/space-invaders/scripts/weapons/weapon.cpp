@@ -25,10 +25,10 @@ namespace SpaceInvaders {
         world.Redraw();
     }
 
-    void Weapon::Activate() { };
-    void Weapon::Disactivate() { };
-    void Weapon::Shot() { };
-    void Weapon::Tick(float dt) { };
+    void Weapon::Activate() { }
+    void Weapon::Disactivate() { }
+    void Weapon::Shot() { }
+    void Weapon::Tick(float dt) { }
 
     void Weapon::Draw(Volumatrix::Grid& grid, const Volumatrix::Point& position) {
         grid.StorePoints(icon, position);

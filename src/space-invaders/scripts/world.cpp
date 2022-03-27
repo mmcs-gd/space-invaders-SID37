@@ -7,6 +7,7 @@
 #include "space-invaders/scripts/weapons/lightning.h"
 #include "space-invaders/scripts/levels/levels.h"
 #include "space-invaders/scripts/decorations/cloud.h"
+#include "space-invaders/scripts/decorations/explosion.h"
 
 #include <algorithm>
 
@@ -121,6 +122,10 @@ namespace SpaceInvaders {
         bullets.clear();
         invaders.clear();
 
+        for (auto weapon: weapons) {
+            weapon->Reset();
+        }
+
         level = 0;
         Levels::Init(*this, level);
         restarting = false;
@@ -128,7 +133,10 @@ namespace SpaceInvaders {
     }
 
     void World::Restart() {
+        Volumatrix::Point pos = player.Position() + player.Size() / 2;
+        AddDecoration(std::make_shared<Explosion>(*this, pos, Volumatrix::GridColor{40, 20, 0}, 10, 5, 100, 30, 50, 3, 0));
         restarting = true;
+        pause_time = 0.5;
     }
 
 
@@ -193,6 +201,15 @@ namespace SpaceInvaders {
 
 
     void World::Tick(float dt) {
+        for (auto decoration: decorations) {
+            decoration->Tick(dt);
+        }
+
+        if (pause_time > 0) {
+            pause_time -= dt;
+            return;
+        }
+
         for (auto bullet: bullets) {
             auto pos = bullet->Position();
             auto size = bullet->Size();
@@ -228,9 +245,6 @@ namespace SpaceInvaders {
         }
         for (auto invader: invaders) {
             invader->Tick(dt);
-        }
-        for (auto decoration: decorations) {
-            decoration->Tick(dt);
         }
         DeleteNotAlive(bullets);
         DeleteNotAlive(invaders);

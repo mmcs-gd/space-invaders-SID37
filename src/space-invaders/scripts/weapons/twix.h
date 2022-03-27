@@ -17,6 +17,7 @@ namespace SpaceInvaders {
     public:
         Twix(World& world, float period, float reserve, float recovery_speed);
 
+        virtual void Reset() override;
         virtual void Activate() override;
         virtual void Shot() override;
         virtual void Tick(float dt) override;

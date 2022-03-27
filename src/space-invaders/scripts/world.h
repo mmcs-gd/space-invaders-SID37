@@ -52,6 +52,7 @@ namespace SpaceInvaders {
         bool activate_weapon = false;
         int current_weapon = 0;
         bool restarting = false;
+        float pause_time = 0;
         int level = 0;
 
         void NextLevel();

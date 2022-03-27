@@ -13,6 +13,12 @@ namespace SpaceInvaders {
     }
 
 
+    void Gun::Reset() {
+        reload_time = 0;
+        SetProgress(1);
+    }
+
+
     void Gun::Activate() {
         world.player.UpdateMesh({6, 13, 13, Assets::player_gun[0]});
         world.UpdateMaterial(World::COLOR_PLAYER, {{0.3, 0.7, 0.0}, 1});

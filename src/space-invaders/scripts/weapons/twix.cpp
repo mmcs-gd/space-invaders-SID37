@@ -41,6 +41,13 @@ namespace SpaceInvaders {
         SetProgress(current_bullets / reserve);
     }
 
+
+    void Twix::Reset() {
+        current_bullets = reserve;
+        SetProgress(1);
+    }
+
+
     void Twix::Tick(float dt) {
         if (time < period) time += dt;
         if (current_bullets >= reserve) return;

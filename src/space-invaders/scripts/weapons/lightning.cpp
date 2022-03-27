@@ -14,6 +14,12 @@ namespace SpaceInvaders {
     }
 
 
+    void Lightning::Reset() {
+        reload_time = 0;
+        SetProgress(1);
+    }
+
+
     void Lightning::Activate() {
         world.player.UpdateMesh({6, 13, 13, Assets::player_lightning[0]});
         world.UpdateMaterial(World::COLOR_PLAYER, {{0.7, 0.7, 0.7}, 1});
