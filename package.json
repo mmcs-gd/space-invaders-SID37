@@ -1,16 +1,28 @@
 {
-  "name": "space-invaders",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html --out-dir docs --public-url ./"
-  },
-  "license": "ISC",
-  "devDependencies": {
-    "@babel/core": "^7.17.0",
-    "parcel": "^2.2.1",
-    "@parcel/babel-preset-env": "^2.3.2"
-  }
+    "name": "space-invaders",
+    "version": "1.0.0",
+    "description": "fixed shooter in which the player moves a laser cannon horizontally across the bottom of the screen and fires at aliens overhead",
+    "main": "index.js",
+    "watch": {
+        "em-build-debug": {
+            "patterns": [
+                "src"
+            ],
+            "extensions": "cpp,h",
+            "quiet": false
+        }
+    },
+    "scripts": {
+        "em-build-debug": "node build.js src debug dist/index.js",
+        "em-build": "node build.js src release dist/index.js",
+        "copy-static": "copyfiles -u 1 public/* dist",
+        "build": "npm run copy-static && npm run em-build",
+        "build-debug": "npm run copy-static && npm run em-build-debug",
+        "watch": "npm run copy-static && npm-watch"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "copyfiles": "^2.4.1",
+        "npm-watch": "^0.11.0"
+    }
 }
